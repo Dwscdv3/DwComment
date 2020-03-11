@@ -9,7 +9,10 @@ namespace DwComment.Models
     public class DwCommentContext : DbContext
     {
         public DwCommentContext(DbContextOptions<DwCommentContext> options)
-            : base(options) { }
+            : base(options)
+        {
+            Database.Migrate();
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

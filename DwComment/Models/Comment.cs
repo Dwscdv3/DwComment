@@ -13,7 +13,9 @@ namespace DwComment.Models
         public int ThreadId { get; set; }
         [Required]
         public string Nickname { get; set; }
+        [EmailAddress]
         public string Mail { get; set; }
+        [Url]
         public string Link { get; set; }
         [Required]
         public string Content { get; set; }

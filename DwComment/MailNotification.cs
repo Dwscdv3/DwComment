@@ -19,25 +19,32 @@ namespace DwComment
             From = from;
         }
 
-        public async Task SendWait(string subject, string body)
+        public async Task SendAsync(string subject, string body)
         {
             if (To != null)
             {
-                await SendWait(subject, body, To);
+                await SendAsync(subject, body, To);
             }
             else
             {
                 throw new Exception("To cannot be null.");
             }
         }
-        public async Task SendWait(string subject, string body, MailAddress to)
+        public async Task SendAsync(string subject, string body, MailAddress to)
         {
             using (var msg = new MailMessage(From, to))
             {
                 msg.Subject = subject;
                 msg.Body = body;
                 msg.IsBodyHtml = true;
-                await SmtpClient.SendMailAsync(msg);
+                try
+                {
+                    await SmtpClient.SendMailAsync(msg);
+                }
+                catch (SmtpException ex)
+                {
+                    Console.Error.WriteLine(ex);
+                }
             }
         }
     }
